@@ -400,6 +400,16 @@ header.topbar .zoom-toggle button.current { color: #0c3f78; }
 .auth-tree-panel { max-height: calc(100vh - var(--top-stick) - 24px); }
 body.zoomed .chapter-view .screen { max-height: calc(100vh - var(--top-stick) - 24px); }
 html { scroll-padding-top: calc(var(--top-stick) + 8px); }
+
+/* ===== 제작 안내 알림 (우측 설명 패널 하단) ===== */
+.detail-col { position: sticky; top: calc(var(--top-stick) + 12px); align-self: start; min-width: 0; }
+.detail-col > aside.detail { position: static; }
+@media (max-width: 1050px) { .detail-col { position: static; } }
+@media (max-width: 1400px) { #chapter-menu-page .detail-col { position: static; grid-column: auto; } }
+.credit-note { position: relative; margin-top: 14px; padding: 14px 38px 14px 18px; border: 1px solid #ddd6fe; border-left: 4px solid #8b5cf6; border-radius: 12px; background: linear-gradient(135deg, #f5f3ff 0%, #eef2ff 100%); color: #334155; font-size: 13px; line-height: 1.65; letter-spacing: -.01em; }
+.credit-note strong { color: #4c2fc4; font-weight: 700; }
+.credit-note mark { padding: 0 3px; color: inherit; background: linear-gradient(transparent 52%, #d9cfff 52%); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.credit-note::after { content: "✦"; position: absolute; top: 8px; right: 12px; color: #a5b4fc; font-size: 14px; }
 </style>
 </head>
 <body>
@@ -7243,6 +7253,25 @@ document.querySelectorAll('[data-zoom]').forEach(b => b.addEventListener('click'
   window.addEventListener('resize', apply);
   window.addEventListener('load', function () { init(); setTimeout(apply, 300); });
   if (document.readyState !== 'loading') init(); else document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+<script>
+/* 우측 설명 패널 카드 바깥 하단 제작 안내 */
+(function () {
+  function add() {
+    document.querySelectorAll('aside.detail').forEach(function (a) {
+      if (a.parentElement && a.parentElement.classList.contains('detail-col')) return;
+      var col = document.createElement('div');
+      col.className = 'detail-col';
+      a.parentNode.insertBefore(col, a);
+      col.appendChild(a);
+      var d = document.createElement('div');
+      d.className = 'credit-note';
+      d.innerHTML = '<strong>SWG 마스터 <mark>김상문 수석</mark>(feat. <mark>박동석 선임</mark>)</strong>의 토큰을 기반으로 제작되었습니다.';
+      col.appendChild(d);
+    });
+  }
+  if (document.readyState !== 'loading') add(); else document.addEventListener('DOMContentLoaded', add);
 })();
 </script>
 </body>
