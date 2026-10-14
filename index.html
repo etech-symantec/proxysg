@@ -290,6 +290,15 @@ body.zoomed .chapter-view .screen.panning { cursor: grabbing; user-select: none;
 body.zoom-150 .chapter-view .image-wrap { width: 150%; max-width: none; }
 body.zoom-200 .chapter-view .image-wrap { width: 200%; max-width: none; }
 @media (max-width: 680px) { .zoom-toggle { display: none; } }
+
+/* ===== 공통 헤더(header.js) 아래로 페이지 배치 ===== */
+:root { --hdr-h: 0px; --hdr-stick: 0px; }
+body { padding-top: var(--hdr-h); }
+.gt { top: var(--hdr-stick); }
+.gt-backdrop, body.gt-open .gt-backdrop { top: var(--hdr-stick); }
+.detail, .auth-tree-panel { top: calc(var(--hdr-stick) + 18px); }
+.auth-tree-panel { max-height: calc(100vh - var(--hdr-stick) - 36px); }
+body.zoomed .chapter-view .screen { max-height: calc(100vh - var(--hdr-stick) - 110px); }
 </style>
 </head>
 <body>
@@ -5027,6 +5036,31 @@ document.querySelectorAll('[data-zoom]').forEach(b => b.addEventListener('click'
   document.addEventListener('mouseup', () => { if (drag) drag.screen.classList.remove('panning'); drag = null; });
 })();
 
+</script>
+<script>
+/* 공통 헤더 높이를 측정해 CSS 변수로 반영 */
+(function () {
+  var root = document.documentElement;
+  function apply() {
+    var h = document.querySelector('.header-wrap') || document.querySelector('.dashboard-header');
+    if (!h) { root.style.setProperty('--hdr-h', '0px'); root.style.setProperty('--hdr-stick', '0px'); return; }
+    var cs = getComputedStyle(h), r = h.getBoundingClientRect(), pos = cs.position, gap = 8;
+    var stick = 0, pad = 0;
+    if (pos === 'fixed') { stick = Math.max(0, r.bottom) + gap; pad = stick; }
+    else if (pos === 'absolute') { stick = 0; pad = Math.max(0, r.bottom + window.scrollY) + gap; }
+    else if (pos === 'sticky') { stick = h.offsetHeight + (parseFloat(cs.top) || 0) + gap; }
+    root.style.setProperty('--hdr-h', pad + 'px');
+    root.style.setProperty('--hdr-stick', stick + 'px');
+  }
+  function init() {
+    apply();
+    var h = document.querySelector('.header-wrap') || document.querySelector('.dashboard-header');
+    if (h && window.ResizeObserver) new ResizeObserver(apply).observe(h);
+  }
+  window.addEventListener('resize', apply);
+  window.addEventListener('load', function () { init(); setTimeout(apply, 300); });
+  if (document.readyState !== 'loading') init(); else document.addEventListener('DOMContentLoaded', init);
+})();
 </script>
 </body>
 </html>
