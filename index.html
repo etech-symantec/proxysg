@@ -291,14 +291,31 @@ body.zoom-150 .chapter-view .image-wrap { width: 150%; max-width: none; }
 body.zoom-200 .chapter-view .image-wrap { width: 200%; max-width: none; }
 @media (max-width: 680px) { .zoom-toggle { display: none; } }
 
-/* ===== 공통 헤더(header.js) 아래로 페이지 배치 ===== */
-:root { --hdr-h: 0px; --hdr-stick: 0px; }
+/* ===== 공통 헤더(header.js) 아래로 페이지 배치 + 얇은 고정 상단바 ===== */
+:root { --hdr-h: 0px; --hdr-stick: 0px; --bar-h: 46px; --top-stick: calc(var(--hdr-stick) + var(--bar-h)); }
 body { padding-top: var(--hdr-h); }
+header.topbar {
+  position: sticky !important; top: var(--hdr-stick) !important; z-index: 70;
+  min-height: 0 !important; height: auto; padding: 5px clamp(14px, 2.4vw, 32px) !important; gap: 10px !important;
+  color: #fff !important; background: linear-gradient(110deg, #0b335e 0%, #0c4f91 58%, #1376b8 100%) !important;
+  border: 0 !important; border-radius: 0 !important; box-shadow: 0 4px 14px rgba(10,44,82,.22) !important; backdrop-filter: none !important;
+}
+header.topbar .gt-toggle, header.topbar .brand-mark { width: 32px !important; height: 32px !important; border-radius: 9px; font-size: 16px; }
+header.topbar > div:has(> h1) { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+header.topbar h1 { margin: 0 !important; padding: 0 !important; background: none !important; border: 0 !important; box-shadow: none !important; color: #fff !important; font-size: 17px !important; line-height: 1.2; white-space: nowrap; }
+header.topbar .eyebrow { margin: 0 !important; color: #bfd8f0 !important; font-size: 11px !important; opacity: 1 !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+header.topbar .progress span { display: inline !important; margin-right: 6px; color: #bfd8f0 !important; font-size: 11px; opacity: 1 !important; }
+header.topbar .progress strong { color: #fff !important; font-size: 13px; opacity: 1 !important; }
+header.topbar .zoom-toggle { padding: 2px; }
+header.topbar .zoom-toggle button { padding: 3px 9px; color: #dbeafe; opacity: 1; }
+header.topbar .zoom-toggle button.current { color: #0c3f78; }
+@media (max-width: 900px) { header.topbar .eyebrow { display: none; } }
 .gt { top: var(--hdr-stick); }
 .gt-backdrop, body.gt-open .gt-backdrop { top: var(--hdr-stick); }
-.detail, .auth-tree-panel { top: calc(var(--hdr-stick) + 18px); }
-.auth-tree-panel { max-height: calc(100vh - var(--hdr-stick) - 36px); }
-body.zoomed .chapter-view .screen { max-height: calc(100vh - var(--hdr-stick) - 110px); }
+.detail, .auth-tree-panel { top: calc(var(--top-stick) + 12px); }
+.auth-tree-panel { max-height: calc(100vh - var(--top-stick) - 24px); }
+body.zoomed .chapter-view .screen { max-height: calc(100vh - var(--top-stick) - 24px); }
+html { scroll-padding-top: calc(var(--top-stick) + 8px); }
 </style>
 </head>
 <body>
@@ -5051,11 +5068,13 @@ document.querySelectorAll('[data-zoom]').forEach(b => b.addEventListener('click'
     else if (pos === 'sticky') { stick = h.offsetHeight + (parseFloat(cs.top) || 0) + gap; }
     root.style.setProperty('--hdr-h', pad + 'px');
     root.style.setProperty('--hdr-stick', stick + 'px');
+    var bar = document.querySelector('header.topbar');
+    if (bar) root.style.setProperty('--bar-h', bar.offsetHeight + 'px');
   }
   function init() {
     apply();
     var h = document.querySelector('.header-wrap') || document.querySelector('.dashboard-header');
-    if (h && window.ResizeObserver) new ResizeObserver(apply).observe(h);
+    if (window.ResizeObserver) { var ro = new ResizeObserver(apply); if (h) ro.observe(h); var b = document.querySelector('header.topbar'); if (b) ro.observe(b); }
   }
   window.addEventListener('resize', apply);
   window.addEventListener('load', function () { init(); setTimeout(apply, 300); });
