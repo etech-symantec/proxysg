@@ -406,7 +406,8 @@ html { scroll-padding-top: calc(var(--top-stick) + 8px); }
 .detail-col > aside.detail { position: static; }
 @media (max-width: 1050px) { .detail-col { position: static; } }
 @media (max-width: 1400px) { #chapter-menu-page .detail-col { position: static; grid-column: auto; } }
-.credit-note { position: relative; margin-top: 14px; padding: 14px 38px 14px 18px; border: 1px solid #ddd6fe; border-left: 4px solid #8b5cf6; border-radius: 12px; background: linear-gradient(135deg, #f5f3ff 0%, #eef2ff 100%); color: #334155; font-size: 13px; line-height: 1.65; letter-spacing: -.01em; }
+.credit-note { position: relative; overflow: hidden; margin-top: 14px; padding: 14px 38px 14px 22px; border: 1px solid #c7d2fe; border-radius: 14px; background: linear-gradient(135deg, #f1f0ff 0%, #eef2ff 100%); box-shadow: 0 6px 20px rgba(99,102,241,.12); color: #334155; font-size: 13px; line-height: 1.65; letter-spacing: -.01em; }
+.credit-note::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #6366f1 0%, #a855f7 100%); }
 .credit-note strong { color: #4c2fc4; font-weight: 700; }
 .credit-note mark { padding: 0 3px; color: inherit; background: linear-gradient(transparent 52%, #d9cfff 52%); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 .credit-note::after { content: "✦"; position: absolute; top: 8px; right: 12px; color: #a5b4fc; font-size: 14px; }
