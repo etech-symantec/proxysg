@@ -401,6 +401,22 @@ header.topbar .zoom-toggle button.current { color: #0c3f78; }
 body.zoomed .chapter-view .screen { max-height: calc(100vh - var(--top-stick) - 24px); }
 html { scroll-padding-top: calc(var(--top-stick) + 8px); }
 
+
+/* ===== 상단 메뉴 탭(Dashboards/Reports/...) 겹침 해소 + 확대·굵게 ===== */
+.configuration-source-nav { display: flex; align-items: stretch; gap: clamp(8px, .9vw, 18px); padding: 0 0 0 clamp(14px, 1.6vw, 28px) !important; font-size: clamp(12px, .78vw, 14px) !important; font-weight: 700; letter-spacing: -.01em; }
+.configuration-source-nav span { position: static !important; width: auto !important; left: auto !important; flex: 0 0 auto; padding: .18em clamp(8px, .7vw, 14px) 0 !important; white-space: nowrap; font-weight: 700; }
+.configuration-source-nav span { border-bottom: 2px solid transparent !important; padding-bottom: 0 !important; }
+.configuration-source-nav:not(.dashboard-source-nav):not(.reports-source-nav):not(.administration-source-nav) span:nth-child(3),
+.dashboard-source-nav span:nth-child(1), .reports-source-nav span:nth-child(2), .administration-source-nav span:nth-child(4) { border-bottom-color: #08749a !important; }
+
+/* ===== 상단바: 현재 화면 경로를 SGOS 문구 옆으로 ===== */
+.sr-only { position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+header.topbar .topbar-info { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 14px; }
+header.topbar .topbar-info .eyebrow { flex: 0 1 auto; }
+header.topbar .topbar-info .progress { display: flex !important; align-items: baseline; gap: 8px; min-width: 0; margin: 0 !important; padding-left: 14px; border-left: 1px solid rgba(255,255,255,.35); text-align: left; }
+header.topbar .topbar-info .progress span { display: inline !important; margin: 0; flex: 0 0 auto; }
+header.topbar .topbar-info .progress strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; }
+@media (max-width: 900px) { header.topbar .topbar-info .progress { padding-left: 0; border-left: 0; } }
 /* ===== 제작 안내 알림 (우측 설명 패널 하단) ===== */
 .detail-col { position: sticky; top: calc(var(--top-stick) + 12px); align-self: start; min-width: 0; }
 .detail-col > aside.detail { position: static; }
@@ -431,13 +447,12 @@ html { scroll-padding-top: calc(var(--top-stick) + 8px); }
   <div id="gt-backdrop" class="gt-backdrop"></div>
   <header class="topbar">
     <button type="button" class="gt-toggle" id="gt-toggle" aria-label="메뉴 트리 열기/닫기" aria-controls="guide-tree">☰</button>
-    <div class="brand-mark" aria-hidden="true">P</div>
-    <div>
+    <h1 class="sr-only">ProxySG Interactive Guide</h1>
+    <div class="topbar-info">
       <p class="eyebrow">SGOS 7.3.x · 화면 기반 운영 안내서 · 좌측 메뉴 트리</p>
-      <h1>ProxySG Interactive Guide</h1>
+      <div class="progress"><span>현재 화면</span><strong id="current-chapter">Dashboard</strong></div>
     </div>
     <div class="zoom-toggle" role="group" aria-label="스크린샷 크기"><button type="button" data-zoom="fit" class="current">맞춤</button><button type="button" data-zoom="150">1.5배</button><button type="button" data-zoom="200">2배</button></div>
-    <div class="progress"><span>현재 화면</span><strong id="current-chapter">Dashboard</strong></div>
   </header>
 
   <main class="chapter-view active" id="chapter-dashboard">
