@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media=\'all\'">
   <link rel="preload" as="image" href="images/img-001.webp" fetchpriority="high" />
   <title>ProxySG Interactive Guide</title>
-  <link rel="stylesheet" href="assets/app.css?v=5600fbfe" />
+  <link rel="stylesheet" href="assets/app.css?v=1e02bc0e" />
 </head>
 <body>
   <script>
@@ -34,8 +34,14 @@
     <button type="button" class="gt-toggle" id="gt-toggle" aria-label="메뉴 트리 열기/닫기" aria-controls="guide-tree">☰</button>
     <h1 class="sr-only">ProxySG Interactive Guide</h1>
     <div class="topbar-info">
-      <p class="eyebrow">SGOS 7.3.x · 화면 기반 운영 안내서 · 좌측 메뉴 트리</p>
+      <p class="eyebrow">SGOS 7.3.x</p>
       <div class="progress"><span>현재 화면</span><strong id="current-chapter">Dashboard</strong></div>
+    </div>
+    <div class="top-search" id="top-search-wrap">
+      <svg class="top-search-icon" viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 13l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input type="search" id="top-search" placeholder="화면·항목 검색 (예: NTP, Keyrings)" autocomplete="off" aria-label="화면과 항목 검색" aria-controls="top-search-results" aria-expanded="false" />
+      <kbd class="top-search-key" aria-hidden="true">/</kbd>
+      <div class="top-search-results" id="top-search-results" role="listbox" hidden></div>
     </div>
     <div class="zoom-toggle" role="group" aria-label="스크린샷 크기"><button type="button" data-zoom="fit" class="current">맞춤</button><button type="button" data-zoom="150">1.5배</button><button type="button" data-zoom="200">2배</button></div>
   </header>
@@ -1729,6 +1735,6 @@
     · <a href="https://knowledge.broadcom.com/external/article/171053" target="_blank" rel="noopener">Force Bypass</a>
     · <a href="https://knowledge.broadcom.com/external/article/231533/proxy-protocol-support.html" target="_blank" rel="noopener">PROXY Protocol</a>
   </footer>
-  <script defer src="assets/app.js?v=e333f8f9"></script>
+  <script defer src="assets/app.js?v=b94fdf22"></script>
 </body>
 </html>
